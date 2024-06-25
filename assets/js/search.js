@@ -33,6 +33,7 @@ $(() => {
     pageNo=1;
     isLastPage=false;
     $("#small_areaCode").hide();
+    $("input:radio[name=sigungu]").prop("checked", false);
     $(".title-hash").html($(this)[0].classList[1]);
     if($("#searchInput").val().length >= 2) {
       $("input:radio[name=sigungu]").prop("checked", false);
@@ -43,7 +44,6 @@ $(() => {
         getAreaCode();
         getItemListByAreaCode();
       }else {
-        $("input:radio[name=sigungu]").prop("checked", false);
         getAreaCode();
         getItemListByAreaCode();
       }
@@ -287,12 +287,15 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
 }
 
 function renderList(items, isAppend) {
+  let template = "";
   if(items.body.numOfRows == 0) {
     alert("마지막 페이지입니다.");
+    template = "결과가 없어요";
+    $(".course").html(template);
+    $("#count").html('0');
     isLastPage=true;
     return false;
   }
-  let template = "";
   if(items.body.totalCount > 0) { 
     let itemArr = items.body.items.item;
     for(let item of itemArr) {
