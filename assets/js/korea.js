@@ -37,9 +37,12 @@ function loadSVG() {
       const paths = svgElement.querySelectorAll('path');
       for(const path of paths) {
         path.addEventListener('click', function() {
-          $("input:radio[name=areaCode]").prop("checked", false);
+          $(`#${this.id}`).prop("checked", true);
+          $(".title-hash").html("#"+$(`#${this.id}`)[0].classList[1]);
           $("input:radio[name=sigungu]").prop("checked", false);
-          console.log(this.id);
+          getItemListByAreaCode();
+          getAreaCode();
+          document.getElementById("modal-close").click();
         });
         path.addEventListener('mouseover', function() {
           $(this).attr("fill", "#ffffff");

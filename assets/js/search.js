@@ -1,8 +1,9 @@
 const API_KEY = "5dx9VltlDcWscOP7NLW0yH/slO2Tl2qnffXGNS1HOhuhhi2KUrHaEzADPUbDY0bUb0zn7FprTTiQHnIRcO1psw==";
-const BASE_URL_AREACODE = "http://apis.data.go.kr/B551011/KorService1/areaCode1";
-const BASE_URL_AREABASED_LIST = "http://apis.data.go.kr/B551011/KorService1/areaBasedList1";
-const BASE_URL_KEYWORD = "http://apis.data.go.kr/B551011/KorService1/searchKeyword1";
+const BASE_URL_AREACODE = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaCode1`;
+const BASE_URL_AREABASED_LIST = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaBasedList1`;
+const BASE_URL_KEYWORD = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/searchKeyword1`;
 const numOfRows = 10;
+const contentTypeId = localStorage.getItem("language") == "ko" ? 25 : 76;
 let pageNo = 1;
 let pIndex = 1;
 let isFirst = true;
@@ -34,7 +35,7 @@ $(() => {
     isLastPage=false;
     $("#small_areaCode").hide();
     $("input:radio[name=sigungu]").prop("checked", false);
-    $(".title-hash").html($(this)[0].classList[1]);
+    $(".title-hash").html("#"+$(this)[0].classList[1]);
     if($("#searchInput").val().length >= 2) {
       $("input:radio[name=sigungu]").prop("checked", false);
       getAreaCode();
@@ -206,7 +207,7 @@ function getItemListByAreaCode(isAppend=false) {
     numOfRows: numOfRows,
     pageNo: pageNo,
     serviceKey: API_KEY,
-    contentTypeId: 25,
+    contentTypeId: contentTypeId,
     arrange: "Q",
     MobileApp: "TestApp",
     MobileOS: "ETC"
@@ -261,7 +262,7 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     cat1: cat1,
     cat2: cat2,
     cat3: cat3,
-    contentTypeId: 25
+    contentTypeId: contentTypeId
   }
 
   $.ajax({
