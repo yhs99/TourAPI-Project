@@ -20,23 +20,32 @@ let sido = {
 
 window.onload = () => {
   loadSVG();
+  
 }
 
 function loadSVG() {
-  let svgDiv = document.getElementById("svg");
+  let svgDiv = document.getElementById("modal-body");
   let mime = "image/svg+xml";
   $.ajax({
     url: "./assets/img/Korea.svg",
     dataType: "text",
     success: function(response) {
-      console.log(response);
+      //console.log(response);
       const svgElement = new DOMParser().parseFromString(response, mime).documentElement;
       svgDiv.appendChild(svgElement);
 
       const paths = svgElement.querySelectorAll('path');
       for(const path of paths) {
         path.addEventListener('click', function() {
+          $("input:radio[name=areaCode]").prop("checked", false);
+          $("input:radio[name=sigungu]").prop("checked", false);
           console.log(this.id);
+        });
+        path.addEventListener('mouseover', function() {
+          $(this).attr("fill", "#ffffff");
+        });
+        path.addEventListener('mouseleave', function() {
+          $(this).attr("fill", "#FF99CC");
         });
       }
     },
