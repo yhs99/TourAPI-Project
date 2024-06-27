@@ -30,7 +30,7 @@
         <!-- Template Stylesheet -->
         <style>
             .breadcrumb {
-                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/main_visual_14.png);
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/main_visual_12.png);
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -42,10 +42,6 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="./assets/css/style.css" rel="stylesheet">
         <script src="./assets/js/langauge.js" defer></script>
-        <script src="./assets/js/search.js" defer></script>
-        <script src="./assets/js/korea.js" defer></script>
-        <script src="./assets/js/bookmark.js" defer></script>
-        <script src="./assets/js/geolocation.js" defer></script>
         <script>
         loadLanguageDatas();
 
@@ -126,107 +122,23 @@
     </div>
 </div>
 <!-- Navbar End -->
+ <!-- 상세내용 -->
 <div class="container-fluid breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4" id="title-travelcourse"></h1>
-        <p class="fs-5 text-white mb-4" id="title"></p>   
+        <span class="badge rounded-pill bg-danger align-left">3코스</span><h3 class="text-white display-3 mb-4" id="title-travelcourse-detail">제목</h1>
+        <p class="fs-5 text-white mb-4" id="title">지역1 지역2 | 코스 총거리 : 14.13km</p>
     </div>
 </div>
-
+<hr>
 <!-- Services Start -->
 <div class="container-fluid service bg-light">
-    <!-- <div class="container pt-5 content-title-container">
-        <div class="mx-auto pb-5" style="max-width: 800px;">
-            <h5 class="text-uppercase text-success" id="title-travelcourse">여행코스</h5>
-            <h1 class="mb-0 title-hash" id="title" id="title-title">#전체</h1>
-        </div>
-    </div> -->
-    <!-- <div class="container content-title-container border">
-    </div> -->
     <div class="container py-5 content-container">
         <div class="row">
-            <div class="col-md-4 remote-container">
-                <div class="search-container query mt-4 bb">
-                    <div class="btns d-grid m-4">
-                        <button class="btn col btn-success" data-bs-toggle="modal" data-bs-target="#searchByMap" id="searchByMapAndPosition">지도 및 위치로 검색</button>
-                        <button class="btn col btn-danger" onclick="window.location.reload()" id="resetBtn">초기화</button>
-                    </div>
-                    <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력 후 엔터를 눌러주세요" id="placeholder">
-                    <div id="exception" style="color:red; font-size: 8px; display: none;">2글자 이상 입력해주세요.</div>
-                </div>
-                <div class="search-area-container bb big-area h-auto mt-4" id="big_areaCode">
-                
-                </div>
-                <div class="search-area-container bb small-area mt-4" id="small_areaCode" style="display: none;">
-                
-                </div>
-            </div>
-             <div class="col-md-7 list-container">
-                <div class="row py-4 countAndSort">
-                    <div class="col-8 text-dark"><span id="total-count"></span> : <span id="count"></span></div>
-                    <div class="col-4 text-end">
-                        <span class="sort-select sort-selected" id="recent"></span> | <span class="sort-select" id="popular"></span>
-                    </div>
-                </div>
-
-                <ul class="course">
-                    <!--<li class="course-lists py-3 border-bottom border-2">
-                        <div class="row list-content">
-                            <div class="col-3 list-image">
-                                <img src="./img/blog-1.jpg" class="w-100">
-                            </div>
-                            <div class="col-9 list-content-content">
-                                <h2><a href="#">제목</a></h2>
-                                <p>내용</p>
-                            </div>
-                             <div class="col list-hashtag">
-                                <ul>
-                                    <li class="hashtag">#해쉬1</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>-->
-                </ul>
-            </div>
+            
         </div>
     </div>
 </div>
 <!-- Services End -->
-<!-- The Modal -->
-<div class="modal" id="searchByMap">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-title"></h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body" id="modal-body">
-        <div class="myPosition" id="myPosition">
-            <button class="btn btn-success" id="searchByMyLocation"></button>
-        </div>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal-close"></button>
-        </div>
-  
-      </div>
-    </div>
-  </div>
-
-<!-- 토스트 -->
-  <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-      <div id="toast-body" class="toast-body" style="font-size: 19px;">
-        
-      </div>
-    </div>
-  </div>
 <!-- Footer Start -->
 <div class="container-fluid footer bg-dark text-body py-5">
     <div class="container py-5">
@@ -350,11 +262,6 @@
             </div>
         </div>
         <!-- Copyright End -->
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>   
-
         
         <!-- JavaScript Libraries -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

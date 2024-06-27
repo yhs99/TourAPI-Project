@@ -2,6 +2,8 @@ const API_KEY = "5dx9VltlDcWscOP7NLW0yH/slO2Tl2qnffXGNS1HOhuhhi2KUrHaEzADPUbDY0b
 const BASE_URL_AREACODE = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaCode1`;
 const BASE_URL_AREABASED_LIST = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaBasedList1`;
 const BASE_URL_KEYWORD = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/searchKeyword1`;
+const BASE_URL_LOCATION = `http://apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/locationBasedList1`;
+
 const numOfRows = 10;
 const contentTypeId = localStorage.getItem("language") == "ko" ? 25 : 76;
 let pageNo = 1;
@@ -10,6 +12,7 @@ let isFirst = true;
 let isLoaded = true;
 let isLastPage = false;
 let title = "";
+let pos = "";
 let currentSearch = "getItemListByAreaCode";
 const serviceCode = {
   C01 : "추천코스",
@@ -77,6 +80,11 @@ $(() => {
   window.addEventListener("scroll", () => {
     const isScrollEnded =
       window.innerHeight + window.scrollY + 850 >= document.body.offsetHeight;
+
+    if (isScrollEnded && isLoaded && !isLastPage && currentSearch=="searchByLocation") {
+      pageNo++;
+      getItemListByLocation(true);
+    }
     if (isScrollEnded && isLoaded && !isLastPage) {
       pageNo++;
       getItemListByAreaCode(true);
@@ -187,7 +195,7 @@ function renderAreaCodeSmall(items) {
 }
 
 function getItemListByAreaCode(isAppend=false) {
-  currentSearch = "getItemListByAreaCode";;
+  currentSearch = "getItemListByAreaCode";
   let area = $("input:radio[name=areaCode]:checked").val();
   let sigungu = $("input:radio[name=sigungu]:checked").val();
   area == "undefiend" ? area="" : $("input:radio[name=areaCode]:checked").val();
@@ -290,10 +298,12 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
 function renderList(items, isAppend) {
   let template = "";
   if(items.body.numOfRows == 0) {
-    alert("마지막 페이지입니다.");
+    var toastElList = [].slice.call(document.querySelectorAll('#liveToast'))
+    var toastList = toastElList.map(function(toastEl) {
+      return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
     template = "결과가 없어요";
-    $(".course").html(template);
-    $("#count").html('0');
     isLastPage=true;
     return false;
   }
