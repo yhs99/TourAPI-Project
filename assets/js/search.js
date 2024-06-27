@@ -38,7 +38,7 @@ $(() => {
     isLastPage=false;
     $("#small_areaCode").hide();
     $("input:radio[name=sigungu]").prop("checked", false);
-    $(".title-hash").html("#"+$(this)[0].classList[1]);
+    $("#title").html("#"+$(this)[0].classList[1]);
     if($("#searchInput").val().length >= 2) {
       $("input:radio[name=sigungu]").prop("checked", false);
       getAreaCode();
@@ -80,7 +80,6 @@ $(() => {
   window.addEventListener("scroll", () => {
     const isScrollEnded =
       window.innerHeight + window.scrollY + 850 >= document.body.offsetHeight;
-
     if (isScrollEnded && isLoaded && !isLastPage && currentSearch=="searchByLocation") {
       pageNo++;
       getItemListByLocation(true);
@@ -88,6 +87,19 @@ $(() => {
     if (isScrollEnded && isLoaded && !isLastPage) {
       pageNo++;
       getItemListByAreaCode(true);
+    }
+  });
+
+  $(document).on('change', '.sortclass', function() {
+    //console.log(this);
+    pageNo=1;
+    isLastPage=false;
+    if(currentSearch == "searchByLocation") {
+      getItemListByLocation();
+    }else if($("#searchInput").val().length >= 2) {
+      getItemListByAreaCodeWithKeyword();
+    }else {
+      getItemListByAreaCode();
     }
   });
 })
@@ -119,7 +131,7 @@ function getAreaCode() {
     dataType: "json",
     type: "get",
     success: function(response) {
-      console.log(response);
+      //console.log(response);
       if(!areaCode) {
         renderAreaCode(response.response.body.items.item);
       }else {
@@ -127,8 +139,8 @@ function getAreaCode() {
       }
     },
     error: function(error) {
-      console.log(error)
-      console.log(error.responseText)
+      //console.log(error)
+      //console.log(error.responseText)
     },
     beforeSend: function() {
       isLoaded = false;
@@ -156,15 +168,15 @@ function renderAreaCode(items) {
   }
   let template = `<ul class="h-auto big_area_ul">
                     <li class="areaCodes">
-                        <label for="all">전체</label>
                         <input type="radio" class="areaCode_radio" name="areaCode" id="all" value="" checked>
+                        <label for="all">전체</label>
                     </li>
   `;
   for(let item of items) {
     template += `
       <li class="areaCodes">
-        <label for="${item.code}">${Object.keys(areaName).includes(item.name) ? areaName[item.name] : item.name}</label>
         <input type="radio" class="areaCode_radio ${item.name}" name="areaCode" id="${item.code}" value="${item.code}">
+        <label for="${item.code}">${Object.keys(areaName).includes(item.name) ? areaName[item.name] : item.name}</label>
       </li>
     `
   }
@@ -175,16 +187,16 @@ function renderAreaCode(items) {
 
 function renderAreaCodeSmall(items) {
   let template = `<ul class="small_area_ul">
-                    <li class="areaCodes">
-                        <label for="all_small">전체</label>
+                    <li class="areaCodes smalls">
                         <input type="radio" class="areaCode_radio2" name="sigungu" id="all_small" value="" checked>
+                        <label for="all_small">전체</label>
                     </li>`;
 
   for(let item of items) {
     template += `
-      <li class="areaCodes">
-        <label for="sigungu${item.code}">${item.name}</label>
+      <li class="areaCodes smalls">
         <input type="radio" class="areaCode_radio2" name="sigungu" id="sigungu${item.code}" value="${item.code}">
+        <label for="sigungu${item.code}">${item.name}</label>
       </li>
     `
   }
@@ -195,6 +207,7 @@ function renderAreaCodeSmall(items) {
 }
 
 function getItemListByAreaCode(isAppend=false) {
+  let sort = $("input:radio[name=sort_radio]:checked").val();
   currentSearch = "getItemListByAreaCode";
   let area = $("input:radio[name=areaCode]:checked").val();
   let sigungu = $("input:radio[name=sigungu]:checked").val();
@@ -216,7 +229,7 @@ function getItemListByAreaCode(isAppend=false) {
     pageNo: pageNo,
     serviceKey: API_KEY,
     contentTypeId: contentTypeId,
-    arrange: "Q",
+    arrange: sort,
     MobileApp: "TestApp",
     MobileOS: "ETC"
   }
@@ -228,11 +241,11 @@ function getItemListByAreaCode(isAppend=false) {
     dataType : "json",
     success : function(response) {
       renderList(response.response, isAppend);
-      console.log(response);
+      //console.log(response);
     },
     error: function(error) {
-      console.log(error);
-      console.log(error.responseText);
+      //console.log(error);
+      //console.log(error.responseText);
     },
     beforeSend: function() {
       isLoaded = false;
@@ -247,6 +260,7 @@ function getItemListByAreaCode(isAppend=false) {
 }
 
 function getItemListByAreaCodeWithKeyword(isAppend=false) {
+  let sort = $("input:radio[name=sort_radio]:checked").val();
   currentSearch = "getItemListByAreaCodeWithKeyword";
   let area = $("input:radio[name=areaCode]:checked").val();
   let sigungu = $("input:radio[name=sigungu]:checked").val();
@@ -267,6 +281,7 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     pageNo: pageNo,
     areaCode: area,
     sigunguCode: sigungu,
+    arrange: sort,
     cat1: cat1,
     cat2: cat2,
     cat3: cat3,
@@ -279,12 +294,12 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     dataType: "json",
     type: "get",
     success: function(response) {
-      console.log(response);
+      //console.log(response);
       renderList(response.response,isAppend);
     },
     error: function(error) {
-      console.log(error);
-      console.log(error.responseText);
+      //console.log(error);
+      //console.log(error.responseText);
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -299,12 +314,16 @@ function renderList(items, isAppend) {
   let template = "";
   if(items.body.numOfRows == 0) {
     var toastElList = [].slice.call(document.querySelectorAll('#liveToast'))
+    template = "결과가 없어요";
+    isLastPage=true;
+    
     var toastList = toastElList.map(function(toastEl) {
       return new bootstrap.Toast(toastEl)
     })
     toastList.forEach(toast => toast.show())
-    template = "결과가 없어요";
-    isLastPage=true;
+    $("#count").html(`${parseInt(items.body.totalCount).toLocaleString()}`);
+    if(pageNo == 1) $(".course").html(template);
+    else $(".course").append(template);
     return false;
   }
   if(items.body.totalCount > 0) { 

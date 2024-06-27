@@ -1,5 +1,9 @@
 
 $("#searchByMyLocation").on("click", function() {
+  pageNo=1;
+  isLastPage=false;
+  $("input:radio[name=areaCode]").eq(0).prop("checked", true);
+  $("#small_areaCode").slideUp()
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError, {enableHighAccuray : false});
 });
 
@@ -15,7 +19,9 @@ function geoSuccess(geo) {
 }
 
 function getItemListByLocation(isAppend=false) {
+  let sort = $("input:radio[name=sort_radio]:checked").val();
   let params = {
+    arrange: sort,
     numOfRows : numOfRows,
     pageNo : pageNo,
     MobileOS : "ETC",
@@ -39,7 +45,8 @@ function getItemListByLocation(isAppend=false) {
       renderList(response.response, isAppend);
     },
     error : function(error) {
-
+      console.log(error);
+      console.log(error.responseText);
     },
     beforeSend: function() {
       isLoaded = false;

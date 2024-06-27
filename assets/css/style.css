@@ -12,6 +12,10 @@
  }
  ul {
   list-style: none;
+  padding: 0;
+ }
+ .big_area_ul {
+  padding: 0 30px;
  }
  a {
   color: black;
@@ -94,4 +98,16 @@
 
 .bg-secondary {
   background-color: rgba(102, 102, 102, 0.1) !important;
+}
+label {
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 30px;
+}
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"]:checked+label {
+  background-color: rgba(100, 100, 100, 0.5);
+  color: white;
 }

@@ -37,6 +37,8 @@ function loadSVG() {
       const paths = svgElement.querySelectorAll('path');
       for(const path of paths) {
         path.addEventListener('click', function() {
+          isLastPage=false;
+          pageNo=1;
           $(`#${this.id}`).prop("checked", true);
           $(".title-hash").html("#"+$(`#${this.id}`)[0].classList[1]);
           $("input:radio[name=sigungu]").prop("checked", false);

@@ -51,7 +51,6 @@
 
         function loadLanguageDatas() {
             
-            console.log("loading language Datas");
             $.ajax({
                 url: "./assets/language.json",
                 dataType: "json",
@@ -68,7 +67,7 @@
         function renderComponents(components) {
             let currLang = localStorage.getItem("language");
             let datas = components[currLang];
-            console.log(datas);
+            //console.log(datas);
             for(let key in datas) {
                 $("#"+key).html(datas[key]);
                 if(key.toString() == "searchByMapAndPosition") {
@@ -165,7 +164,18 @@
                 <div class="row py-4 countAndSort">
                     <div class="col-8 text-dark"><span id="total-count"></span> : <span id="count"></span></div>
                     <div class="col-4 text-end">
-                        <span class="sort-select sort-selected" id="recent"></span> | <span class="sort-select" id="popular"></span>
+                        <span>
+                            <input type="radio" name="sort_radio" class="sortclass" id="recent-sort" value="C" checked>
+                            <label for="recent-sort" id="recent"></label>
+                        </span>
+                        |
+                        <span>
+                            <input type="radio" name="sort_radio" class="sortclass" id="title-sort" value="A">
+                            <label for="title-sort" id="popular"></label>
+                        </span>
+                            <!-- <span class="sort-select sort-selected" id="recent"></span> |  -->
+                            <!-- <span class="sort-select" id="popular"></span> -->
+                        
                     </div>
                 </div>
 
