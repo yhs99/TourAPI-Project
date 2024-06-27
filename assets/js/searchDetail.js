@@ -9,7 +9,21 @@ const COMMON_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", c
 const INTRO_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId: contentId, contentTypeId : "25", serviceKey: API_KEY};
 const INFO_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId: contentId, contentTypeId : "25", serviceKey: API_KEY};
 const IMAGE_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId: contentId, imageYN: "Y", subImageYN: "Y", serviceKey: API_KEY};
-
+const serviceCodes = {
+  C01 : "추천코스",
+  C0112 : "가족코스",
+  C0113 : "나홀로코스",
+  C0114 : "힐링코스",
+  C0115 : "도보코스",
+  C0116 : "캠핑코스",
+  C0117 : "맛코스",
+  C01120001	: "가족코스",
+  C01130001	: "나홀로코스",
+  C01140001	: "힐링코스",
+  C01150001	: "도보코스",
+  C01160001	: "캠핑코스",
+  C01170001	: "맛코스"
+}
 var defaultInfo;
 var introInfo;
 var routesInfo;
@@ -28,13 +42,14 @@ function getDefaultInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      console.log("====COMMONINFO=====")
-      console.log(response.response.body.items.item[0]);
+      //console.log("====COMMONINFO=====")
+      //console.log(response.response.body.items.item[0]);
       defaultInfo = response.response.body.items.item[0];
     },
     error: function(error) {
-      console.log(BASE_URL_COMMON)
-      console.log(error.responseText)
+      //console.log(BASE_URL_COMMON);
+      //console.log(error.responseText);
+      throw(error);
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -54,13 +69,14 @@ function getIntroInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      console.log("====INTROINFO=====")
-      console.log(response.response.body.items.item[0]);
+      //console.log("====INTROINFO=====")
+      //console.log(response.response.body.items.item[0]);
       introInfo = response.response.body.items.item[0];
     },
     error: function(error) {
-      console.log(BASE_URL_INTRO)
-      console.log(error.responseText)
+      //console.log(BASE_URL_INTRO)
+      //console.log(error.responseText)
+      throw(error);
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -80,14 +96,15 @@ function getRoutesInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      console.log("====ROUTEINFO=====")
-      console.log(response.response.body.items.item)
+      //console.log("====ROUTEINFO=====")
+      //console.log(response.response.body.items.item)
       getRoutesDefaultInfo(response.response.body.items.item);
       routesInfo = response.response.body.items.item;
     },
     error: function(error) {
-      console.log(BASE_URL_INFO)
-      console.log(error.responseText)
+      //console.log(BASE_URL_INFO)
+      //console.log(error.responseText)
+      throw(error);
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -99,6 +116,7 @@ function getRoutesInfo() {
 }
 
 function getRoutesDefaultInfo(items) {
+  console.log(items);
   if(items.length > 0) {
     for(let route in items) {
       let params = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId : items[route].subcontentid, defaultYN : "Y", firstImageYN : "Y", areacodeYN : "Y", catcodeYN : "Y", addrinfoYN : "Y", mapinfoYN : "Y", overviewYN : "Y", serviceKey: API_KEY};
@@ -109,27 +127,32 @@ function getRoutesDefaultInfo(items) {
         dataType: "json",
         async: false,
         success: function(response) {
-          let resData = response.response.body.items.item[0];
-          let data = {
-            title : resData.title,
-            firstimage : resData.firstimage,
-            firstimage2 : resData.firstimage2,
-            areaCode : resData.areacode,
-            sigunguCode : resData.sigungucode,
-            cat1 : resData.cat1,
-            cat2 : resData.cat2,
-            cat3 : resData.cat3,
-            addr1 : resData.addr1,
-            addr2 : resData.addr2,
-            mapx: resData.mapx,
-            mapy : resData.mapy,
-            overview : resData.overview
+          if(response.response.body.totalCount > 0) {
+            console.log(response);
+            let resData = response.response.body.items.item[0];
+            let data = {
+              contentid : resData.contentid,
+              title : resData.title,
+              firstimage : resData.firstimage,
+              firstimage2 : resData.firstimage2,
+              areaCode : resData.areacode,
+              sigunguCode : resData.sigungucode,
+              cat1 : resData.cat1,
+              cat2 : resData.cat2,
+              cat3 : resData.cat3,
+              addr1 : resData.addr1,
+              addr2 : resData.addr2,
+              mapx: resData.mapx,
+              mapy : resData.mapy,
+              overview : resData.overview
+            }
+            routesDefaultInfo.push(data);
           }
-          routesDefaultInfo.push(data);
         },
         error: function(error) {
-          console.log(BASE_URL_INFO)
-          console.log(error.responseText)
+          //console.log(BASE_URL_INFO)
+          //console.log(error.responseText)
+          throw(error);
         },
         beforeSend: function() {
           showAndHideSpinner("show");
@@ -140,18 +163,77 @@ function getRoutesDefaultInfo(items) {
       });
     }
     renderKAKAOMap();
+    renderDocument();
   }
 }
 
 function renderDocument() {
-  
+  //console.log(routesDefaultInfo);
+  if(routesDefaultInfo.length > 5) $(".list-group").removeClass("d-flex").removeClass("justify-content-center");
+  $(".badge").html(routesDefaultInfo.length + "코스");
+  $("#title-travelcourse-title").html(defaultInfo.title);
+  if(defaultInfo.addr1) {
+    let address = defaultInfo.addr1;
+    address = address.split(" ");
+    $("#title-course-info").html(`${address[0]} ${address[1]}`);
+  }else {
+    let address = routesDefaultInfo[0].addr1;
+    address = address.split(" ");
+    $("#title-course-info").html(`${address[0]} ${address[1]}`);
+  }
+  $("#course-total").html(`코스 총 거리 : ${introInfo.distance}`);
+  $("#taketime").html(`${introInfo.taketime}`);
+  $("#theme").html(`${Object.keys(serviceCodes).includes(defaultInfo.cat3) ? serviceCodes[defaultInfo.cat3] : serviceCodes[defaultInfo.cat1]}`);
+
+  let templateRoute_1 = "";
+  let templateRoute_2 = "";
+  let tags = "";
+  let noimageURL = "./assets/img/no-image.jpg";
+  for(let route in routesDefaultInfo) {
+    templateRoute_1 += `
+    <li class="lists">
+        <a class="list-group-item list-item list-group-item-action ${route==0 ? 'active' : ''}" id="list-item${routesDefaultInfo[route].contentid}-list" data-bs-toggle="list" href="#list-item${routesDefaultInfo[route].contentid}" role="tab" aria-controls="list-item${routesDefaultInfo[route].contentid}" style="width:180px; height: 180px; background: no-repeat url('${routesDefaultInfo[route].firstimage !="" ? routesDefaultInfo[route].firstimage : noimageURL}') 50% 50% / cover;">
+            <div>
+                <span class="${routesDefaultInfo[route].firstimage=='' ? 'text-dark' : ''}">${routesDefaultInfo[route].title}</span>
+            </div>
+        </a>
+    </li>`;
+    templateRoute_2 += `
+    <div class="tab-pane fade show ${route==0 ? 'active' : ''}" id="list-item${routesDefaultInfo[route].contentid}" role="tabpanel" aria-labelledby="list-item${routesDefaultInfo[route].contentid}-list">
+        <div class="text-center">
+            <h2 class="py-3">${routesDefaultInfo[route].title}</h2>
+            <p><small>${routesDefaultInfo[route].addr1 ? routesDefaultInfo[route].addr1 : ''}</small></p>
+            <span>
+              ${routesDefaultInfo[route].overview}
+            </span>
+        </div>
+    </div>
+    `;
+    tags += `
+      #${routesDefaultInfo[route].title} 
+    `
+  }
+  $(".list-group").html(templateRoute_1);
+  $("#nav-tabContent").html(templateRoute_2);
+  $("#tags").html(tags);
 }
 function renderKAKAOMap() {
-  console.log(routesDefaultInfo);
+  let zoom = 0;
+  let distance = parseInt(introInfo.distance);
+  if(distance > 0 && distance <= 20) {
+    zoom = 5;
+  }else if(distance > 20 && distance <= 50) {
+    zoom = 8;
+  }else if(distance > 50 && distance <= 90) {
+    zoom = 9;
+  } else {
+    zoom = 11;
+  }
+  //console.log(routesDefaultInfo);
   let container = document.getElementById('map');
   let options = {
     center: new kakao.maps.LatLng(routesDefaultInfo[1].mapy, routesDefaultInfo[1].mapx), //지도의 중심좌표.
-    level: 7 //지도의 레벨(확대, 축소 정도)
+    level: zoom //지도의 레벨(확대, 축소 정도)
   }
 
   let lines=[],positions = []

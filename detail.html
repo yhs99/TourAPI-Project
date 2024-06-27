@@ -59,11 +59,10 @@
         loadLanguageDatas();
         $(document).ready(() => {
             let isChecked = checkBookMark(new URLSearchParams(location.search).get("contentId"));
-            console.log(isChecked);
-            if(isChecked) $(".balloon").addClass("bi-balloon-heart");
-            else $(".balloon").addClass("bi-balloon-heart-fill");
+            if(isChecked) $(".balloon").addClass("bi-balloon-heart-fill");
+            else $(".balloon").addClass("bi-balloon-heart");
         })
-
+        // 언어 정보를 가져오며, localStorage의 language에 매칭되어 DOM 로딩
         function loadLanguageDatas() {
             
             console.log("loading language Datas");
@@ -145,9 +144,9 @@
  <!-- 상세내용 -->
 <div class="container-fluid breadcrumb">
     <div class="container text-center text-white py-5" style="max-width: 900px;">
-        <span class="badge rounded-pill bg-danger align-left">3코스</span><h3 class="text-white display-3 mb-4" id="title-travelcourse-title">제목</h1>
-        <p class="fs-5 text-white mb-4" id="title-course-info">지역1 지역2 | 코스 총거리 : 14.13km</p>
-        <div class="container">
+        <span class="badge rounded-pill bg-danger align-left"></span><h1 class="text-white mb-4" id="title-travelcourse-title"></h1>
+        <small class="fs-6 text-white mb-4" id="title-course-info"></small><small class="fs-6 text-white mb-4">&nbsp;|&nbsp;</small><small class="fs-6 text-white mb-4" id="course-total"></small>
+        <div class="container pt-3"> 
             <i class="bi balloon" role="button" onclick="bookmark()"></i> |
             <a id="kakaotalk-sharing-btn" href="javascript:shareLink();">
                 <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" width="32px" height="32px"/>
@@ -157,23 +156,70 @@
 </div>
 <div class="container-fluid">
     <div class="content-container">
-        <div class="row">
-            <div class="col text-start bookmark float-left">
+        <div class="row w-50 d-flex align-items-center py-4" style="margin:0 auto">
+            <div class="col d-flex align-items-center">
+                <span class="rounded-circle bg-secondary p-3">
+                    <img src="./assets/img/dates.png" alt="" style="width: 55px; height: 55px"/>
+                </span>
+                <div class="ms-3">
+                    <p class="fw-bold mb-1">일정</p>
+                    <p class="text-muted mb-0" id="taketime"></p></div>
             </div>
-            <div class="col text-end float-right">
+            <div class="col d-flex justify-content-between align-items-center">
+                <div class="col d-flex align-items-center">
+                    <span class="rounded-circle bg-secondary p-3">
+                        <img src="./assets/img/nature.png" alt="" style="width: 55px; height: 55px"/>
+                    </span>                    
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">테마</p>
+                        <p class="text-muted mb-0" id="theme"></p></div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row w-50 d-flex align-items-center py-4" style="margin:0 auto">
+            <div class="col d-flex justify-content-between align-items-center">
+                <div class="col d-flex align-items-center">
+                    <span class="rounded-circle bg-secondary p-3">
+                        <img src="./assets/img/price-tag.png" alt="" style="width: 55px; height: 55px"/>
+                    </span>
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">태그</p>
+                        <p class="text-muted mb-0" id="tags"></p>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
     </div>
 </div>
 <!-- Services Start -->
-<div class="container-fluid service bg-light">
+<div class="container-fluid service">
+    <div class="container py-5 content-container" id="detail-content">
+        서해랑길 고창군산 구간은 세월이 켜켜이 쌓인 흔적을 다양한 각도와 시선에서 만날 수 있는 코스다. 흔히 동해모래사장에서도 상상할 수 있음직한 명사십리 해변이 드넓게 펼쳐져 있는가 하면, 지구의 허파라 불리는 갯벌이 바다와 육지 곳곳에 모세혈관처럼 퍼져있는 생물권보전지역이기도 하다. 서해에 대한 고정관념을 넘어 완전히 새로운 서해의 기억을 담아낼 준비가 된 서해랑길 고창~군산구간을 걸어본다.
+
+    </div>
+</div>
+<div class="container-fluid service">
     <div class="container py-5 content-container">
         <div class="row">
             <div id="map" style="width:100%;height:400px;"></div>
         </div>
     </div>
 </div>
+<div class="container-fluid service bg-light">
+    <div class="container py-5 content-container">
+        <div class="row">
+            <ul class="list-group list-group-horizontal mb-4 d-flex justify-content-center"  style="margin:0 auto;">
+                <!--   -->
+              </ul>
+        </div>
+        <div class="row detailbox">
+            <div class="tab-content" id="nav-tabContent"></div>
+        </div>
+    </div>
+</div>
+
 <!-- Services End -->
 <!-- Footer Start -->
 <div class="container-fluid footer bg-dark text-body py-5">
