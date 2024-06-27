@@ -1,6 +1,6 @@
-/* * {
-  font-family: 'Noto Sans KR' !important;
-} */
+* {
+  font-family: Noto Sans KR, Roboto, sans-serif !important;
+}
  .spinner_back {
   background-color: rgba(128, 128, 128, 0.7);
   position: fixed;
@@ -90,4 +90,8 @@
   margin: 0 30px;
   border-right: 1px solid rgba(0, 0, 0, 0.137);
   background-color: rgba(128, 128, 128, 0.2);
+}
+
+.bg-secondary {
+  background-color: rgba(102, 102, 102, 0.1) !important;
 }
