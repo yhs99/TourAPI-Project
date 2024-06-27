@@ -14,7 +14,6 @@ function checkBookMark(id) {
   let flag = false;
   Object.keys(localStorage).forEach((value, index) => {
     if(value === id.toString()) {
-      console.log("일치");
       flag=true;
     }
   });
