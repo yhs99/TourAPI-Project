@@ -1,0 +1,11 @@
+.balloon {
+  font-size: 26px;
+  color: red;
+}
+hr{
+  margin: 0px;
+}
+.content-container {
+  max-width: 980px !important;
+  margin: 0 auto;
+}
