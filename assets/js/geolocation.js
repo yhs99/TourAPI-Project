@@ -1,6 +1,5 @@
 
 $("#searchByMyLocation").on("click", function() {
-  console.log("clicked");
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError, {enableHighAccuray : false});
 });
 
@@ -12,6 +11,7 @@ function geoSuccess(geo) {
   currentSearch = "searchByLocation";
   pos = geo.coords;
   getItemListByLocation();
+  $("#modal-close").click();
 }
 
 function getItemListByLocation(isAppend=false) {
@@ -55,7 +55,9 @@ function getItemListByLocation(isAppend=false) {
 
 function geoError(err) {
   if(err.code === 1) {
-    alert("")
+    alert("위치정보 제공을 허용해주세요.");
+  }else {
+    alert("오류가 발생했습니다.");
   }
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }

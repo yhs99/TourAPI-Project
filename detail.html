@@ -38,8 +38,6 @@
 
         <!-- Template Stylesheet -->
         <style>
-            
-
             .breadcrumb {
                 background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/main_visual_12.png);
                 background-position: center center;
@@ -53,11 +51,18 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="./assets/css/style.css" rel="stylesheet">
         <link href="./assets/css/style_detail.css" rel="stylesheet">
-        <script src="./assets/js/searchDetail.js" defer></script>
+        <script src="./assets/js/searchDetail.js" async></script>
+        <script src="./assets/js/bookmark.js"></script>
         <script src="./assets/js/langauge.js" defer></script>
         <script src="./assets/js/kakaolink.js" defer></script>
         <script>
         loadLanguageDatas();
+        $(document).ready(() => {
+            let isChecked = checkBookMark(new URLSearchParams(location.search).get("contentId"));
+            console.log(isChecked);
+            if(isChecked) $(".balloon").addClass("bi-balloon-heart");
+            else $(".balloon").addClass("bi-balloon-heart-fill");
+        })
 
         function loadLanguageDatas() {
             
@@ -74,6 +79,7 @@
                 }
             })
         }
+
 
         function renderComponents(components) {
             let currLang = localStorage.getItem("language");
@@ -118,7 +124,7 @@
                 <a href="관광지.html" class="nav-item nav-link" id="tourdestination">관광지</a>
                 <a href="문화시설.html" class="nav-item nav-link" id="culturalfacilities">문화시설</a>
                 <a href="축제공연행사.html" class="nav-item nav-link" id="festival">축제공연행사</a>
-                <a href="여행코스.html" class="nav-item nav-link active" id="travelcourse">여행코스</a>
+                <a href="tourRoute.html" class="nav-item nav-link active" id="travelcourse">여행코스</a>
                 <a href="레포츠.html" class="nav-item nav-link" id="leisuresports">레포츠</a>
                 <a href="숙박.html" class="nav-item nav-link" id="lodgment">숙박</a>
                 <a href="쇼핑.html" class="nav-item nav-link" id="shopping">쇼핑</a>
@@ -142,8 +148,8 @@
         <span class="badge rounded-pill bg-danger align-left">3코스</span><h3 class="text-white display-3 mb-4" id="title-travelcourse-title">제목</h1>
         <p class="fs-5 text-white mb-4" id="title-course-info">지역1 지역2 | 코스 총거리 : 14.13km</p>
         <div class="container">
+            <i class="bi balloon" role="button" onclick="bookmark()"></i> |
             <a id="kakaotalk-sharing-btn" href="javascript:shareLink();">
-                <i class="bi balloon bi-balloon-heart"></i> |
                 <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" width="32px" height="32px"/>
             </a>
         </div>
@@ -164,7 +170,7 @@
 <div class="container-fluid service bg-light">
     <div class="container py-5 content-container">
         <div class="row">
-            
+            <div id="map" style="width:100%;height:400px;"></div>
         </div>
     </div>
 </div>
