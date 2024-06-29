@@ -1,10 +1,10 @@
 let contentId = new URLSearchParams(location.search).get("contentId");
 if(!contentId) location.href="./error.html";
 const API_KEY = "5dx9VltlDcWscOP7NLW0yH/slO2Tl2qnffXGNS1HOhuhhi2KUrHaEzADPUbDY0bUb0zn7FprTTiQHnIRcO1psw==";
-const BASE_URL_COMMON = `https://apis.data.go.kr/B551011/KorService1/detailCommon1`
-const BASE_URL_INTRO = `https://apis.data.go.kr/B551011/KorService1/detailIntro1`
-const BASE_URL_INFO = `https://apis.data.go.kr/B551011/KorService1/detailInfo1`
-const BASE_URL_IMAGE = `https://apis.data.go.kr/B551011/KorService1/detailImage1`
+const BASE_URL_COMMON = `${location.protocol}//apis.data.go.kr/B551011/KorService1/detailCommon1`
+const BASE_URL_INTRO = `${location.protocol}//apis.data.go.kr/B551011/KorService1/detailIntro1`
+const BASE_URL_INFO = `${location.protocol}//apis.data.go.kr/B551011/KorService1/detailInfo1`
+const BASE_URL_IMAGE = `${location.protocol}//apis.data.go.kr/B551011/KorService1/detailImage1`
 const COMMON_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId : contentId, defaultYN : "Y", firstImageYN : "Y", areacodeYN : "Y", catcodeYN : "Y", addrinfoYN : "Y", mapinfoYN : "Y", overviewYN : "Y", serviceKey: API_KEY};
 const INTRO_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId: contentId, contentTypeId : "25", serviceKey: API_KEY};
 const INFO_PARAM = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId: contentId, contentTypeId : "25", serviceKey: API_KEY};
@@ -218,10 +218,10 @@ function renderDocument() {
   $("#tags").html(tags);
 }
 function renderKAKAOMap() {
-  let zoom = 0;
+  let zoom = 7;
   let distance = parseInt(introInfo.distance);
   if(distance > 0 && distance <= 20) {
-    zoom = 5;
+    zoom = 7;
   }else if(distance > 20 && distance <= 50) {
     zoom = 8;
   }else if(distance > 50 && distance <= 90) {
