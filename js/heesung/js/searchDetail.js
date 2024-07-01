@@ -187,7 +187,7 @@ function renderDocument() {
   let templateRoute_1 = "";
   let templateRoute_2 = "";
   let tags = "";
-  let noimageURL = "./assets/img/no-image.jpg";
+  let noimageURL = "./img/heesung/img/no-image.jpg";
   for(let route in routesDefaultInfo) {
     templateRoute_1 += `
     <li class="lists">

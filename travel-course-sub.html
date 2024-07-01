@@ -40,7 +40,7 @@
         <style>
 
             .breadcrumb {
-                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/main_visual_12.png);
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./img/heesung/img/main_visual_12.png);
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -50,12 +50,12 @@
         <!-- 커스텀 CSS JAVASCRIPT -->
         <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
         <link href="css/style.css" rel="stylesheet">
-        <link href="./assets/css/style.css" rel="stylesheet">
-        <link href="./assets/css/style_detail.css" rel="stylesheet">
-        <script src="./assets/js/searchDetail.js" async></script>
-        <script src="./assets/js/bookmark.js"></script>
-        <script src="./assets/js/langauge.js" defer></script>
-        <script src="./assets/js/kakaolink.js" defer></script>
+        <link href="./css/heesung/css/style.css" rel="stylesheet">
+        <link href="./css/heesung/css/style_detail.css" rel="stylesheet">
+        <script src="./js/heesung/js/searchDetail.js" async></script>
+        <script src="./js/heesung/js/bookmark.js"></script>
+        <script src="./js/heesung/js/langauge.js" defer></script>
+        <script src="./js/heesung/js/kakaolink.js" defer></script>
         <script>
         loadLanguageDatas();
         $(document).ready(() => {
@@ -68,7 +68,7 @@
             
             console.log("loading language Datas");
             $.ajax({
-                url: "./assets/language.json",
+                url: "./js/heesung/js/language.json",
                 dataType: "json",
                 type: "get",
                 success: function(response) {
@@ -160,7 +160,7 @@
         <div class="row w-50 d-flex align-items-center py-4" style="margin:0 auto">
             <div class="col d-flex align-items-center">
                 <span class="rounded-circle bg-secondary p-3">
-                    <img src="./assets/img/dates.png" alt="" style="width: 55px; height: 55px"/>
+                    <img src="./img/heesung/img/dates.png" alt="" style="width: 55px; height: 55px"/>
                 </span>
                 <div class="ms-3">
                     <p class="fw-bold mb-1">일정</p>
@@ -169,7 +169,7 @@
             <div class="col d-flex justify-content-between align-items-center">
                 <div class="col d-flex align-items-center">
                     <span class="rounded-circle bg-secondary p-3">
-                        <img src="./assets/img/nature.png" alt="" style="width: 55px; height: 55px"/>
+                        <img src="./img/heesung/img/nature.png" alt="" style="width: 55px; height: 55px"/>
                     </span>                    
                     <div class="ms-3">
                         <p class="fw-bold mb-1">테마</p>
@@ -182,7 +182,7 @@
             <div class="col d-flex justify-content-between align-items-center">
                 <div class="col d-flex align-items-center">
                     <span class="rounded-circle bg-secondary p-3">
-                        <img src="./assets/img/price-tag.png" alt="" style="width: 55px; height: 55px"/>
+                        <img src="./img/heesung/img/price-tag.png" alt="" style="width: 55px; height: 55px"/>
                     </span>
                     <div class="ms-3">
                         <p class="fw-bold mb-1">태그</p>

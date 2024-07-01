@@ -27,7 +27,7 @@ function loadSVG() {
   let svgDiv = document.getElementById("modal-body");
   let mime = "image/svg+xml";
   $.ajax({
-    url: "./assets/img/Korea.svg",
+    url: "./img/heesung/img/Korea.svg",
     dataType: "text",
     success: function(response) {
       //console.log(response);

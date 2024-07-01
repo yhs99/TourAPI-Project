@@ -30,7 +30,7 @@
         <!-- Template Stylesheet -->
         <style>
             .breadcrumb {
-                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/main_visual_14.png);
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./img/heesung/img/main_visual_14.png);
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -40,19 +40,19 @@
         <!-- 커스텀 CSS JAVASCRIPT -->
          <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
         <link href="css/style.css" rel="stylesheet">
-        <link href="./assets/css/style.css" rel="stylesheet">
-        <script src="./assets/js/langauge.js" defer></script>
-        <script src="./assets/js/search.js" defer></script>
-        <script src="./assets/js/korea.js" defer></script>
-        <script src="./assets/js/bookmark.js" defer></script>
-        <script src="./assets/js/geolocation.js" defer></script>
+        <link href="./css/heesung/css/style.css" rel="stylesheet">
+        <script src="./js/heesung/js/langauge.js" defer></script>
+        <script src="./js/heesung/js/search.js" defer></script>
+        <script src="./js/heesung/js/korea.js" defer></script>
+        <script src="./js/heesung/js/bookmark.js" defer></script>
+        <script src="./js/heesung/js/geolocation.js" defer></script>
         <script>
         loadLanguageDatas();
 
         function loadLanguageDatas() {
             
             $.ajax({
-                url: "./assets/language.json",
+                url: "./js/heesung/js/language.json",
                 dataType: "json",
                 type: "get",
                 success: function(response) {

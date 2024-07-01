@@ -336,10 +336,10 @@ function renderList(items, isAppend) {
               <i class="bi ${checkBookMark(item.contentid) ? 'bi-balloon-heart-fill' : 'bi-balloon-heart'}" style="color:red; cursor:pointer;" onclick="addBookMark('${item.title}', ${item.contentid}, this)"></i>
             </div>
             <div class="col-3 list-image">
-              <img src="${!item.firstimage2 ? './assets/img/no-image.jpg' : item.firstimage2}" class="img-fluid w-100">
+              <img src="${!item.firstimage2 ? './img/heesung/img/no-image.jpg' : item.firstimage2}" class="img-fluid w-100">
             </div>
             <div class="col-8 list-content-content">
-              <h5 class="text-truncate"><a href="./detail.html?contentId=${item.contentid}">${item.title}</a>
+              <h5 class="text-truncate"><a href="./travel-course-sub.html?contentId=${item.contentid}">${item.title}</a>
               <p></p>
             </div>
             <div class="col list-hashtag">
