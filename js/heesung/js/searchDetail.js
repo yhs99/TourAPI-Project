@@ -160,6 +160,7 @@ function getRoutesDefaultInfo(items) {
               title : resData.title,
               firstimage : resData.firstimage,
               firstimage2 : resData.firstimage2,
+              homepage : resData.homepage,
               areaCode : resData.areacode,
               sigunguCode : resData.sigungucode,
               cat1 : resData.cat1,
@@ -236,6 +237,7 @@ function renderDocument() {
     <div class="tab-pane fade show ${route==0 ? 'active' : ''}" id="list-item${routesDefaultInfo[route].contentid}" role="tabpanel" aria-labelledby="list-item${routesDefaultInfo[route].contentid}-list">
         <div class="text-center">
             <h2 class="py-3">${routesDefaultInfo[route].title}</h2>
+            <p><small>${routesDefaultInfo[route].homepage ? routesDefaultInfo[route].homepage : ''}</small></p>
             <p><small>${routesDefaultInfo[route].addr1 ? routesDefaultInfo[route].addr1 : ''}</small></p>
             <span>
               ${routesDefaultInfo[route].overview}
