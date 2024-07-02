@@ -201,7 +201,7 @@ function getRoutesDefaultInfo(items) {
 
 function renderDocument() {
   document.title = defaultInfo.title;
-  if(routesDefaultInfo.length > 5) $(".list-group").removeClass("d-flex").removeClass("justify-content-center");
+  if(routesDefaultInfo.length >= 5) $(".list-group").removeClass("d-flex").removeClass("justify-content-center");
   $(".badge").html(routesDefaultInfo.length + "코스");
   $("#title-travelcourse-title").html(defaultInfo.title);
   $("#detail-content").html(defaultInfo.overview);
