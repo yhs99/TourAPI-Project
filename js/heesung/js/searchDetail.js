@@ -26,8 +26,9 @@ const serviceCodes = {
 }
 var defaultInfo;
 var introInfo;
-var routesInfo;
+var routesInfo,xmlDoc;
 let routesDefaultInfo = [];
+let parser = new DOMParser();
 
 getDefaultInfo();
 
@@ -260,7 +261,6 @@ function renderKAKAOMap() {
       level: 5 //지도의 레벨(확대, 축소 정도)
     }
 
-    let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
     for(let routes of routesDefaultInfo) {
       lines.push(new kakao.maps.LatLng(routes.mapy, routes.mapx));
       positions.push({
@@ -282,10 +282,10 @@ function renderKAKAOMap() {
     for (let i = 0; i < positions.length; i ++) {
       
       // 마커 이미지의 이미지 크기 입니다
-      let imageSize = new kakao.maps.Size(24, 35); 
+      let imageSize = new kakao.maps.Size(40, 40); 
       
       // 마커 이미지를 생성합니다    
-      let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+      let markerImage = new kakao.maps.MarkerImage('./img/heesung/marker/marker-'+(i+1)+'.png', imageSize); 
       
       // 마커를 생성합니다
       let marker = new kakao.maps.Marker({
