@@ -6,6 +6,8 @@ const BASE_URL_LOCATION = `${location.protocol}//apis.data.go.kr/B551011/${local
 
 const numOfRows = 10;
 const contentTypeId = localStorage.getItem("language") == "ko" ? 25 : 76;
+let parser = new DOMParser();
+let xmlDoc;
 let pageNo = 1;
 let pIndex = 1;
 let isFirst = true;
@@ -143,6 +145,15 @@ function getAreaCode() {
     error: function(error) {
       console.error(error)
       console.error(error.responseText)
+      xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+      
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+        showAndHideSpinner("show");
+        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        setTimeout(() => {
+          getAreaCode();
+        }, 1000);
+      }
     },
     beforeSend: function() {
       isLoaded = false;
@@ -248,6 +259,15 @@ function getItemListByAreaCode(isAppend=false) {
     error: function(error) {
       console.error(error);
       console.error(error.responseText);
+      xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+      
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+        showAndHideSpinner("show");
+        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        setTimeout(() => {
+          getItemListByAreaCode();
+        }, 1000);
+      }
     },
     beforeSend: function() {
       isLoaded = false;
@@ -302,6 +322,16 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     error: function(error) {
       console.error(error);
       console.error(error.responseText);
+      xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+      
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+        showAndHideSpinner("show");
+        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        setTimeout(() => {
+          getItemListByAreaCodeWithKeyword();
+        }, 1000);
+      }
+      
     },
     beforeSend: function() {
       isLoaded = false;

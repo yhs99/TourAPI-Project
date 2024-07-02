@@ -49,7 +49,15 @@ function getDefaultInfo() {
     error: function(error) {
       console.error(BASE_URL_COMMON);
       console.error(error.responseText);
-      throw(error);
+      xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+      
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+        showAndHideSpinner("show");
+        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        setTimeout(() => {
+          getDefaultInfo();
+        }, 1000);
+      }
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -76,7 +84,15 @@ function getIntroInfo() {
     error: function(error) {
       console.error(BASE_URL_INTRO)
       console.error(error.responseText)
-      throw(error);
+      xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+      
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+        showAndHideSpinner("show");
+        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        setTimeout(() => {
+          getIntroInfo();
+        }, 1000);
+      }
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -104,7 +120,15 @@ function getRoutesInfo() {
     error: function(error) {
       console.error(BASE_URL_INFO)
       console.error(error.responseText)
-      throw(error);
+      xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+      
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+        showAndHideSpinner("show");
+        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        setTimeout(() => {
+          getRoutesInfo();
+        }, 1000);
+      }
     },
     beforeSend: function() {
       showAndHideSpinner("show");
@@ -150,9 +174,17 @@ function getRoutesDefaultInfo(items) {
           }
         },
         error: function(error) {
-          //console.log(BASE_URL_INFO)
-          //console.log(error.responseText)
-          throw(error);
+          console.error(BASE_URL_INFO)
+          console.error(error.responseText)
+          xmlDoc = parser.parseFromString(error.responseText, "text/xml");
+          
+          if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+            showAndHideSpinner("show");
+            console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+            setTimeout(() => {
+              getRoutesDefaultInfo();
+            }, 1000);
+          }
         },
         beforeSend: function() {
           showAndHideSpinner("show");
