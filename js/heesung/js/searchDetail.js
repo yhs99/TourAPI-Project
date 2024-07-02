@@ -32,7 +32,7 @@ let routesDefaultInfo = [];
 getDefaultInfo();
 
 function bookmark() {
-  addBookMark(defaultInfo.title, contentId, $(".balloon"));
+  addBookMark(introInfo.contentId, defaultInfo.title, defaultInfo.firstimage2, `.${location.pathname}?${location.search}`,$(".balloon"));
 }
 
 function getDefaultInfo() {
@@ -42,13 +42,13 @@ function getDefaultInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      //console.log("====COMMONINFO=====")
-      //console.log(response.response.body.items.item[0]);
+      console.log("====COMMONINFO=====")
+      console.log(response.response.body.items.item[0]);
       defaultInfo = response.response.body.items.item[0];
     },
     error: function(error) {
-      //console.log(BASE_URL_COMMON);
-      //console.log(error.responseText);
+      console.error(BASE_URL_COMMON);
+      console.error(error.responseText);
       throw(error);
     },
     beforeSend: function() {
@@ -69,13 +69,13 @@ function getIntroInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      //console.log("====INTROINFO=====")
-      //console.log(response.response.body.items.item[0]);
+      console.log("====INTROINFO=====")
+      console.log(response.response.body.items.item[0]);
       introInfo = response.response.body.items.item[0];
     },
     error: function(error) {
-      //console.log(BASE_URL_INTRO)
-      //console.log(error.responseText)
+      console.error(BASE_URL_INTRO)
+      console.error(error.responseText)
       throw(error);
     },
     beforeSend: function() {
@@ -96,14 +96,14 @@ function getRoutesInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      //console.log("====ROUTEINFO=====")
-      //console.log(response.response.body.items.item)
+      console.log("====ROUTEINFO=====")
+      console.log(response.response.body.items.item)
       getRoutesDefaultInfo(response.response.body.items.item);
       routesInfo = response.response.body.items.item;
     },
     error: function(error) {
-      //console.log(BASE_URL_INFO)
-      //console.log(error.responseText)
+      console.error(BASE_URL_INFO)
+      console.error(error.responseText)
       throw(error);
     },
     beforeSend: function() {
@@ -168,9 +168,11 @@ function getRoutesDefaultInfo(items) {
 }
 
 function renderDocument() {
+  document.title = defaultInfo.title;
   if(routesDefaultInfo.length > 5) $(".list-group").removeClass("d-flex").removeClass("justify-content-center");
   $(".badge").html(routesDefaultInfo.length + "코스");
   $("#title-travelcourse-title").html(defaultInfo.title);
+  $("#detail-content").html(defaultInfo.overview);
   if(defaultInfo.addr1) {
     let address = defaultInfo.addr1;
     address = address.split(" ");

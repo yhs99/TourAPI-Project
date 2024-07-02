@@ -83,8 +83,10 @@ $(() => {
     if (isScrollEnded && isLoaded && !isLastPage && currentSearch=="searchByLocation") {
       pageNo++;
       getItemListByLocation(true);
-    }
-    if (isScrollEnded && isLoaded && !isLastPage) {
+    }else if (isScrollEnded && isLoaded && !isLastPage && $("#searchInput").val().length >= 2) {
+      pageNo++;
+      getItemListByAreaCodeWithKeyword(true);
+    }else if(isScrollEnded && isLoaded && !isLastPage) {
       pageNo++;
       getItemListByAreaCode(true);
     }
@@ -139,8 +141,8 @@ function getAreaCode() {
       }
     },
     error: function(error) {
-      //console.log(error)
-      //console.log(error.responseText)
+      console.error(error)
+      console.error(error.responseText)
     },
     beforeSend: function() {
       isLoaded = false;
@@ -244,8 +246,8 @@ function getItemListByAreaCode(isAppend=false) {
       //console.log(response);
     },
     error: function(error) {
-      //console.log(error);
-      //console.log(error.responseText);
+      console.error(error);
+      console.error(error.responseText);
     },
     beforeSend: function() {
       isLoaded = false;
@@ -298,13 +300,15 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
       renderList(response.response,isAppend);
     },
     error: function(error) {
-      //console.log(error);
-      //console.log(error.responseText);
+      console.error(error);
+      console.error(error.responseText);
     },
     beforeSend: function() {
+      isLoaded = false;
       showAndHideSpinner("show");
     },
     complete : function() {
+      isLoaded = true;
       showAndHideSpinner("hide");
     }
   })
@@ -333,7 +337,7 @@ function renderList(items, isAppend) {
         <li class="course-lists py-3 border-bottom border-2">
           <div class="row list-content">
             <div class="col-1 bookmark">
-              <i class="bi ${checkBookMark(item.contentid) ? 'bi-balloon-heart-fill' : 'bi-balloon-heart'}" style="color:red; cursor:pointer;" onclick="addBookMark('${item.title}', ${item.contentid}, this)"></i>
+              <i class="bi ${checkBookMark(item.contentid) ? 'bi-balloon-heart-fill' : 'bi-balloon-heart'}" style="color:red; cursor:pointer;" onclick="addBookMark('${item.contentid}', '${item.title}', '${item.firstimage2}','./travel-course-sub.html?contentId=${item.contentid}', this)"></i>
             </div>
             <div class="col-3 list-image">
               <img src="${!item.firstimage2 ? './img/heesung/img/no-image.jpg' : item.firstimage2}" class="img-fluid w-100">

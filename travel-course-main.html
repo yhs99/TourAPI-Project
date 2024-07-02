@@ -13,6 +13,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
         <!-- Icon Font Stylesheet -->
@@ -50,7 +51,7 @@
         loadLanguageDatas();
 
         function loadLanguageDatas() {
-            
+            if(!localStorage.getItem("language")) localStorage.setItem("language", "ko");
             $.ajax({
                 url: "./js/heesung/js/language.json",
                 dataType: "json",
@@ -100,18 +101,18 @@
             <h1 class="text-primary display-5">Environs</h1>
         </a>
         <button class="navbar-toggler py-2 px-3 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="fa fa-bars text-primary"></span>
+            <i class="bi bi-list" style="color:#f8b864"></i>
         </button>
         <div class="collapse navbar-collapse bg-light" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
-                <a href="관광지.html" class="nav-item nav-link" id="tourdestination">관광지</a>
-                <a href="문화시설.html" class="nav-item nav-link" id="culturalfacilities">문화시설</a>
-                <a href="축제공연행사.html" class="nav-item nav-link" id="festival">축제공연행사</a>
-                <a href="여행코스.html" class="nav-item nav-link active" id="travelcourse">여행코스</a>
-                <a href="레포츠.html" class="nav-item nav-link" id="leisuresports">레포츠</a>
-                <a href="숙박.html" class="nav-item nav-link" id="lodgment">숙박</a>
-                <a href="쇼핑.html" class="nav-item nav-link" id="shopping">쇼핑</a>
-                <a href="음식점.html" class="nav-item nav-link" id="restaurant">음식점</a>
+                <a href="관광지.html" class="nav-item nav-link" id="tourdestination"></a>
+                <a href="문화시설.html" class="nav-item nav-link" id="culturalfacilities"></a>
+                <a href="축제공연행사.html" class="nav-item nav-link" id="festival"></a>
+                <a href="여행코스.html" class="nav-item nav-link active" id="travelcourse"></a>
+                <a href="레포츠.html" class="nav-item nav-link" id="leisuresports"></a>
+                <a href="숙박.html" class="nav-item nav-link" id="lodgment"></a>
+                <a href="쇼핑.html" class="nav-item nav-link" id="shopping"></a>
+                <a href="음식점.html" class="nav-item nav-link" id="restaurant"></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="bi bi-translate"></i></a>
                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -148,10 +149,10 @@
                 <div class="search-container query mt-4 bb">
                     <div class="btns d-grid m-4">
                         <button class="btn col btn-success" data-bs-toggle="modal" data-bs-target="#searchByMap" id="searchByMapAndPosition">지도 및 위치로 검색</button>
-                        <button class="btn col btn-danger" onclick="window.location.reload()" id="resetBtn">초기화</button>
+                        <button class="btn col btn-danger" onclick="window.location.reload()" id="resetBtn"></button>
                     </div>
                     <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력 후 엔터를 눌러주세요" id="placeholder">
-                    <div id="exception" style="color:red; font-size: 8px; display: none;">2글자 이상 입력해주세요.</div>
+                    <div id="exception" style="color:red; font-size: 8px; display: none;"></div>
                 </div>
                 <div class="search-area-container bb big-area h-auto mt-4" id="big_areaCode">
                 
@@ -203,7 +204,7 @@
 </div>
 <!-- Services End -->
 <!-- The Modal -->
-<div class="modal" id="searchByMap">
+<div class="modal fade" id="searchByMap">
     <div class="modal-dialog">
       <div class="modal-content">
   
