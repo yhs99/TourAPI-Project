@@ -6,7 +6,12 @@ $("#searchByMyLocation").on("click", function() {
   $("#small_areaCode").slideUp()
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError, {enableHighAccuray : false});
 });
-
+/**
+ * 사용자의 위치정보를 가져와 데이터 요청 함수를 실행합니다
+ * 위치정보를 가져올 수 없으면 error를 핸들링합니다
+ * @param {*} geo 
+ * @returns 
+ */
 function geoSuccess(geo) {
   if(!geo) {
     geoError({code: 1});
@@ -17,7 +22,10 @@ function geoSuccess(geo) {
   getItemListByLocation();
   $("#modal-close").click();
 }
-
+/**
+ * 위치 기반의 리스트 목록 데이터를 요청합니다.
+ * @param {boolean} isAppend 
+ */
 function getItemListByLocation(isAppend=false) {
   let sort = $("input:radio[name=sort_radio]:checked").val();
   let params = {
@@ -59,7 +67,10 @@ function getItemListByLocation(isAppend=false) {
   })
 
 }
-
+/**
+ * 위치정보 에러 핸들링 함수
+ * @param {Object} err 
+ */
 function geoError(err) {
   if(err.code === 1) {
     alert("위치정보 제공을 허용해주세요.");

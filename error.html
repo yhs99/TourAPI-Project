@@ -28,7 +28,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="./assets/js/langauge.js" defer></script>
+        <script src="./js/heesung/js/langauge.js" defer></script>
 
         <script>
             loadLanguageDatas();
@@ -37,7 +37,7 @@
                 
                 console.log("loading language Datas");
                 $.ajax({
-                    url: "./assets/language.json",
+                    url: "./js/heesung/js/language.json",
                     dataType: "json",
                     type: "get",
                     success: function(response) {
@@ -50,6 +50,7 @@
             }
     
             function renderComponents(components) {
+                let errorCode = new URLSearchParams(location.search).get("errorCode");
                 let currLang = localStorage.getItem("language");
                 let datas = components[currLang];
                 console.log(datas);
@@ -58,6 +59,11 @@
                     if(key.toString() == "searchByMapAndPosition") {
                         $("#"+key).attr("placeholder", datas[key]);
                     }
+                }
+                if(errorCode) {
+                    $("#error-code").html('500');
+                    $("#error-text").html("데이터 로딩중 에러가 발생했습니다.");
+                    $("#error-text-content").html("잠시 후 다시 시도해주세요");
                 }
             }
         </script>

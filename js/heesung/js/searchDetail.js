@@ -36,6 +36,9 @@ function bookmark() {
   addBookMark(introInfo.contentId, defaultInfo.title, defaultInfo.firstimage2, `.${location.pathname}?${location.search}`,$(".balloon"));
 }
 
+/**
+ * 상세 페이지의 초기 데이터를 가져오는 함수
+ */
 function getDefaultInfo() {
   $.ajax({
     url: BASE_URL_COMMON,
@@ -71,6 +74,9 @@ function getDefaultInfo() {
   })
 }
 
+/**
+ * 상세 페이지의 초기 데이터를 가져오는 함수
+ */
 function getIntroInfo() {
   $.ajax({
     url: BASE_URL_INTRO,
@@ -106,6 +112,9 @@ function getIntroInfo() {
   })
 }
 
+/**
+ * 상세 페이지의 초기 데이터를 가져오는 함수
+ */
 function getRoutesInfo() {
   $.ajax({
     url: BASE_URL_INFO,
@@ -140,6 +149,9 @@ function getRoutesInfo() {
   })
 }
 
+/**
+ * 여행 경로의 여행지별 상세 정보를 가져옵니다
+ */
 function getRoutesDefaultInfo(items) {
   console.log(items);
   if(items.length > 0) {
@@ -200,7 +212,9 @@ function getRoutesDefaultInfo(items) {
     renderDocument();
   }
 }
-
+/**
+ * 화면에 데이터를 알맞게 렌더링합니다.
+ */
 function renderDocument() {
   document.title = defaultInfo.title;
   if(routesDefaultInfo.length >= 5) $(".list-group").removeClass("d-flex").removeClass("justify-content-center");
@@ -253,6 +267,9 @@ function renderDocument() {
   $("#nav-tabContent").html(templateRoute_2);
   $("#tags").html(tags);
 }
+/**
+ * KAKAO Map API를 호출하여 렌더링합니다.
+ */
 function renderKAKAOMap() {
   try {
     let container = document.getElementById('map');
@@ -303,7 +320,10 @@ function renderKAKAOMap() {
     $("#map").html("카카오 맵 로딩에 실패했습니다.");
   }
 }
-
+/**
+ * 스피너의 옵션을 설정합니다
+ * @param {string} e show | hide 옵션
+ */
 function showAndHideSpinner(e) {
   e == "show" ? $(".spinner_back").css("visibility", "visible") : $(".spinner_back").css("visibility", "hidden");
 }

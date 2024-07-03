@@ -1,5 +1,5 @@
 const API_KEY = "5dx9VltlDcWscOP7NLW0yH/slO2Tl2qnffXGNS1HOhuhhi2KUrHaEzADPUbDY0bUb0zn7FprTTiQHnIRcO1psw==";
-const BASE_URL_AREACODE = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaCode1`;
+const BASE_URL_AREACODE = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaCode`;
 const BASE_URL_AREABASED_LIST = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaBasedList1`;
 const BASE_URL_KEYWORD = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/searchKeyword1`;
 const BASE_URL_LOCATION = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/locationBasedList1`;
@@ -79,6 +79,9 @@ $(() => {
     }
   })
   //무한스크롤
+  /**
+   * 현재 검색 종류 및 페이지에 따른 요청을 처리합니다
+   */
   window.addEventListener("scroll", () => {
     const isScrollEnded =
       window.innerHeight + window.scrollY + 850 >= document.body.offsetHeight;
@@ -95,7 +98,6 @@ $(() => {
   });
 
   $(document).on('change', '.sortclass', function() {
-    //console.log(this);
     pageNo=1;
     isLastPage=false;
     if(currentSearch == "searchByLocation") {
@@ -135,7 +137,6 @@ function getAreaCode() {
     dataType: "json",
     type: "get",
     success: function(response) {
-      //console.log(response);
       if(!areaCode) {
         renderAreaCode(response.response.body.items.item);
       }else {
@@ -254,7 +255,6 @@ function getItemListByAreaCode(isAppend=false) {
     dataType : "json",
     success : function(response) {
       renderList(response.response, isAppend);
-      //console.log(response);
     },
     error: function(error) {
       console.error(error);
@@ -316,7 +316,6 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     dataType: "json",
     type: "get",
     success: function(response) {
-      //console.log(response);
       renderList(response.response,isAppend);
     },
     error: function(error) {

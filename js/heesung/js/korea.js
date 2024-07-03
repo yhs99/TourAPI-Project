@@ -1,3 +1,4 @@
+loadSVG();
 let sido = {
   seoul : "서울",
   busan : "부산",
@@ -16,11 +17,6 @@ let sido = {
   gyeongnam : "경상남도",
   jeju : "제주도",
   gangwon : "강원도"
-}
-
-window.onload = () => {
-  loadSVG();
-  
 }
 
 function loadSVG() {
@@ -55,7 +51,8 @@ function loadSVG() {
       }
     },
     error : function(error) {
-      console.log(error);
+      console.error(error);
+      svgDiv.html("지도 이미지 로딩에 실패했습니다.");
     }
   })
 }
