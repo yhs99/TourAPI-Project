@@ -1,15 +1,15 @@
 var client_id = 'wfN06JxVRdtNieewzFF0';
 var client_secret = 'Pv6Oop7A_N';
 
-getNaverShortUrl();
+if(location.port=="") {
+  getNaverShortUrl();
+};
+
 function getNaverShortUrl() {
   let api_url = 'https://openapi.naver.com/v1/util/shorturl.json';
-  let options = {url:location.href};
-
   $.ajax({
     type: "get",
-    data: options,
-    dataType: "json",
+    data: {url:location.href},
     url: api_url,
     beforeSend: function(xhr) {
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");

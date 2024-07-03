@@ -254,6 +254,7 @@ function getItemListByAreaCode(isAppend=false) {
     type: "get",
     dataType : "json",
     success : function(response) {
+      console.log(response);
       renderList(response.response, isAppend);
     },
     error: function(error) {
@@ -316,6 +317,7 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     dataType: "json",
     type: "get",
     success: function(response) {
+      console.log(response);
       renderList(response.response,isAppend);
     },
     error: function(error) {
@@ -366,14 +368,14 @@ function renderList(items, isAppend) {
         <li class="course-lists py-3 border-bottom border-2">
           <div class="row list-content">
             <div class="col-1 bookmark">
-              <i class="bi ${checkBookMark(item.contentid) ? 'bi-balloon-heart-fill' : 'bi-balloon-heart'}" style="color:red; cursor:pointer;" onclick="addBookMark('${item.contentid}', '${item.title}', '${item.firstimage2}','./travel-course-sub.html?contentId=${item.contentid}', this)"></i>
+              <i class="bi ${checkBookMark(item.contentid) ? 'bi-balloon-heart-fill' : 'bi-balloon-heart'}" style="color:red; cursor:pointer;" onclick="addBookMark('${item.contentid}', '${item.title}', '${item.firstimage}','./travel-course-sub.html?contentId=${item.contentid}', this)"></i>
             </div>
             <div class="col-3 list-image">
               <img src="${!item.firstimage2 ? './img/heesung/img/no-image.jpg' : item.firstimage2}" class="img-fluid w-100">
             </div>
             <div class="col-8 list-content-content">
               <h5 class="text-truncate"><a href="./travel-course-sub.html?contentId=${item.contentid}">${item.title}</a>
-              <p></p>
+              <p class="pt-1" style="font-size:12px; overflow: hidden;">${isMatchAreaCode(item.areacode)} ${isMatchSigunguCode(item.areacode, item.sigungucode)}</p>
             </div>
             <div class="col list-hashtag">
               <ul>
