@@ -33,7 +33,7 @@ let parser = new DOMParser();
 getDefaultInfo();
 
 function bookmark() {
-  addBookMark(introInfo.contentId, defaultInfo.title, defaultInfo.firstimage2, `.${location.pathname}?${location.search}`,$(".balloon"));
+  addBookMark(defaultInfo.contentid, defaultInfo.title, defaultInfo.firstimage2, `.${location.pathname}?${location.search}`,$(".balloon"));
 }
 
 /**
