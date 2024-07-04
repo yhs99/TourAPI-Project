@@ -4,28 +4,29 @@
  * @param {string} title 게시물 제목
  * @param {URL} imgUrl 리스트에 보여줄 image URL
  * @param {URL} link 게시물의 상세 페이지를 보여줄 link
- * @param {HTMLElement} el 찜 효과를 줄 html element
+ * @param {HTMLElement} el 찜 효과를 줄 html element 아이콘태그
  *  
  */
 function addBookMark(contentid, title, imgUrl, link, el) {
   let favObj = !Cookies.get("favorite_post") ? {} : JSON.parse(Cookies.get("favorite_post"));
   
-  let data = {[contentid] : {
-    postimage: imgUrl,
-    title: title,
-    link: link
-  }};
-  
-  if(!favObj) {
+  if(!favObj) { // 쿠키가 없을 때,
+    let data = {[contentid] : {
+      postimage: imgUrl,
+      title: title,
+      link: link
+    }};
     document.cookie=`favorite_post="${JSON.stringify(data)}`;
-  }else if(favObj.hasOwnProperty(contentid)){
+  }else if(favObj.hasOwnProperty(contentid)){ // 쿠키가 존재하여 해당 contentid 객체를 제거함.
     delete favObj[contentid];
     document.cookie=`favorite_post=${JSON.stringify(favObj)}`;
-  } else {
-    Object.keys(favObj).forEach(e => {
-      data[e] = favObj[e];
-    });
-    document.cookie=`favorite_post=${JSON.stringify(data)}`;
+  } else { // contentid가 없으므로 contentid의 객체를 추가함. 
+    favObj[contentid] ={
+      postimage: imgUrl,
+      title: title,
+      link: link
+    };
+    document.cookie=`favorite_post=${JSON.stringify(favObj)}`;
   }
   
   renderBookMark(el, contentid);
@@ -38,13 +39,7 @@ function addBookMark(contentid, title, imgUrl, link, el) {
  */
 function checkBookMark(id) {
   let favObj = !Cookies.get("favorite_post")? {} : JSON.parse(Cookies.get("favorite_post"));
-  let flag = false;
-  if(!favObj.hasOwnProperty(id)) {
-    flag = false;
-  }else {
-    flag = true;
-  }
-  return flag;
+  return favObj.hasOwnProperty(id);
 }
 
 /**
@@ -53,7 +48,6 @@ function checkBookMark(id) {
  * @param {number} contentid 찜 여부를 판단할 게시물 contentid
  */
 function renderBookMark(el, contentid) {
-  console.log(el);
   if(checkBookMark(contentid)) {
     $(el).addClass("bi-balloon-heart-fill").removeClass("bi-balloon-heart");
   }else {

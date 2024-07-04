@@ -43,10 +43,10 @@ function loadSVG() {
           document.getElementById("modal-close").click();
         });
         path.addEventListener('mouseover', function() {
-          $(this).attr("fill", "#ffffff");
+          $(this).attr("fill-opacity", "1");
         });
         path.addEventListener('mouseleave', function() {
-          $(this).attr("fill", "#FF99CC");
+          $(this).attr("fill-opacity", "0.6");
         });
       }
     },
