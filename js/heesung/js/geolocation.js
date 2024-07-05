@@ -49,12 +49,12 @@ function getItemListByLocation(isAppend=false) {
     type: "get",
     dataType: "json",
     success : function(response) {
-      console.log(response);
+      //console.log.log(response);
       renderList(response.response, isAppend);
     },
     error : function(error) {
-      console.log(error);
-      console.log(error.responseText);
+      //console.log.log(error);
+      //console.log.log(error.responseText);
     },
     beforeSend: function() {
       isLoaded = false;
@@ -77,5 +77,5 @@ function geoError(err) {
   }else {
     alert("오류가 발생했습니다.");
   }
-  console.warn(`ERROR(${err.code}): ${err.message}`);
+  //console.log.warn(`ERROR(${err.code}): ${err.message}`);
 }

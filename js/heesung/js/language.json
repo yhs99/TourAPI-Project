@@ -25,7 +25,8 @@
     "error-code" : "404",
     "error-text" : "페이지를 찾을 수 없어요",
     "error-text-content" : "잠시 후 다시 시도해주세요",
-    "btn-back-home" : "메인으로 돌아가기"
+    "btn-back-home" : "메인으로 돌아가기",
+    "backToList" : "목록보기"
   },
   "en": {
     "tourdestination" : "Tour Destination",
@@ -53,6 +54,7 @@
     "error-code" : "404",
     "error-text" : "Page Not Found",
     "error-text-content" : "We’re sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to use a search?",
-    "btn-back-home" : "Go Back To Home"
+    "btn-back-home" : "Go Back To Home",
+    "backToList" : "Back to List"
   }
 }

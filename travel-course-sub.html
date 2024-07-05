@@ -71,7 +71,7 @@
         // 언어 정보를 가져오며, localStorage의 language에 매칭되어 DOM 로딩
         function loadLanguageDatas() {
             
-            console.log("loading language Datas");
+            //console.log("loading language Datas");
             $.ajax({
                 url: "./js/heesung/js/language.json",
                 dataType: "json",
@@ -89,7 +89,7 @@
         function renderComponents(components) {
             let currLang = localStorage.getItem("language");
             let datas = components[currLang];
-            console.log(datas);
+            //console.log(datas);
             for(let key in datas) {
                 $("#"+key).html(datas[key]);
                 if(key.toString() == "searchByMapAndPosition") {
@@ -119,7 +119,7 @@
     <div class="container px-0">
     <nav class="navbar navbar-light bg-light navbar-expand-xl">
         <a href="index.html" class="navbar-brand ms-3">
-            <h1 class="text-primary display-5">Environs</h1>
+            <h1 class="text-primary display-5">Goott01</h1>
         </a>
         <button class="navbar-toggler py-2 px-3 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <i class="bi bi-list" style="color:#f8b864"></i>
@@ -221,6 +221,9 @@
         </div>
         <div class="row detailbox">
             <div class="tab-content" id="nav-tabContent"></div>
+        </div>
+        <div class="text-end">
+            <button class="text-end btn btn-warning mt-4 btn-lg" id="backToList" onclick="location.href='./travel-course-main.html'"></button>
         </div>
     </div>
 </div>

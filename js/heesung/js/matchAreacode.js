@@ -9,8 +9,8 @@ function areaCodeMatchfn() {
       areaCodeObj = response;
     },
     error: function(error) {
-      console.error("areacode matching error");
-      console.log(error);
+      //console.log.error("areacode matching error");
+      //console.log.log(error);
     }
   })
 }

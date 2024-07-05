@@ -26,7 +26,7 @@ function loadSVG() {
     url: "./img/heesung/img/Korea.svg",
     dataType: "text",
     success: function(response) {
-      //console.log(response);
+      //console.log.log(response);
       const svgElement = new DOMParser().parseFromString(response, mime).documentElement;
       svgDiv.appendChild(svgElement);
 
@@ -51,7 +51,7 @@ function loadSVG() {
       }
     },
     error : function(error) {
-      console.error(error);
+      //console.log.error(error);
       svgDiv.html("지도 이미지 로딩에 실패했습니다.");
     }
   })

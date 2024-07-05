@@ -149,12 +149,12 @@ function getAreaCode() {
       console.error(error.responseText)
       xmlDoc = parser.parseFromString(error.responseText, "text/xml");
       
-      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04' || xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '01') {
         showAndHideSpinner("show");
-        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        //console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
         setTimeout(() => {
           getAreaCode();
-        }, 1000);
+        }, 3000);
       }
     },
     beforeSend: function() {
@@ -255,7 +255,7 @@ function getItemListByAreaCode(isAppend=false) {
     type: "get",
     dataType : "json",
     success : function(response) {
-      console.log(response);
+      //console.log(response);
       renderList(response.response, isAppend);
     },
     error: function(error) {
@@ -263,12 +263,12 @@ function getItemListByAreaCode(isAppend=false) {
       console.error(error.responseText);
       xmlDoc = parser.parseFromString(error.responseText, "text/xml");
       
-      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04' || xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '01') {
         showAndHideSpinner("show");
-        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        //console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
         setTimeout(() => {
           getItemListByAreaCode();
-        }, 1000);
+        }, 3000);
       }
     },
     beforeSend: function() {
@@ -318,7 +318,7 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
     dataType: "json",
     type: "get",
     success: function(response) {
-      console.log(response);
+      //console.log(response);
       renderList(response.response,isAppend);
     },
     error: function(error) {
@@ -326,12 +326,12 @@ function getItemListByAreaCodeWithKeyword(isAppend=false) {
       console.error(error.responseText);
       xmlDoc = parser.parseFromString(error.responseText, "text/xml");
       
-      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04' || xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '01') {
         showAndHideSpinner("show");
-        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        //console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
         setTimeout(() => {
           getItemListByAreaCodeWithKeyword();
-        }, 1000);
+        }, 3000);
       }
       
     },

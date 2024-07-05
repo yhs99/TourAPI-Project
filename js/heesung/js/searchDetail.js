@@ -24,10 +24,10 @@ const serviceCodes = {
   C01160001	: "캠핑코스",
   C01170001	: "맛코스"
 }
-var defaultInfo;
-var introInfo;
-var routesInfo,xmlDoc;
-let routesDefaultInfo = [];
+let noimageURL = "./img/heesung/img/no-image.jpg";
+var defaultInfo, introInfo, routesInfo, xmlDoc;
+let e = new Object();
+let routesDefaultInfo = [],routesImageInfo = [], carouselImageInfo = [];
 let parser = new DOMParser();
 
 getDefaultInfo();
@@ -46,8 +46,8 @@ function getDefaultInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      console.log("====COMMONINFO=====")
-      console.log(response.response.body.items.item[0]);
+      //console.log("====COMMONINFO=====")
+      //console.log(response.response.body.items.item[0]);
       defaultInfo = response.response.body.items.item[0];
     },
     error: function(error) {
@@ -57,10 +57,10 @@ function getDefaultInfo() {
       
       if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
         showAndHideSpinner("show");
-        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        //console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
         setTimeout(() => {
           getDefaultInfo();
-        }, 1000);
+        }, 3000);
       }
     },
     beforeSend: function() {
@@ -84,8 +84,8 @@ function getIntroInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      console.log("====INTROINFO=====")
-      console.log(response.response.body.items.item[0]);
+      //console.log("====INTROINFO=====")
+      //console.log(response.response.body.items.item[0]);
       introInfo = response.response.body.items.item[0];
     },
     error: function(error) {
@@ -95,10 +95,10 @@ function getIntroInfo() {
       
       if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
         showAndHideSpinner("show");
-        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        //console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
         setTimeout(() => {
           getIntroInfo();
-        }, 1000);
+        }, 3000);
       }
     },
     beforeSend: function() {
@@ -122,8 +122,8 @@ function getRoutesInfo() {
     dataType: "json",
     type: "get",
     success : function(response) {
-      console.log("====ROUTEINFO=====")
-      console.log(response.response.body.items.item)
+      //console.log("====ROUTEINFO=====")
+      //console.log(response.response.body.items.item)
       getRoutesDefaultInfo(response.response.body.items.item);
       routesInfo = response.response.body.items.item;
     },
@@ -132,12 +132,12 @@ function getRoutesInfo() {
       console.error(error.responseText)
       xmlDoc = parser.parseFromString(error.responseText, "text/xml");
       
-      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
+      if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04' || xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '01') {
         showAndHideSpinner("show");
-        console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
+        //console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
         setTimeout(() => {
           getRoutesInfo();
-        }, 1000);
+        }, 3000);
       }
     },
     beforeSend: function() {
@@ -153,10 +153,11 @@ function getRoutesInfo() {
  * 여행 경로의 여행지별 상세 정보를 가져옵니다
  */
 function getRoutesDefaultInfo(items) {
-  console.log(items);
+  //console.log(items);
   if(items.length > 0) {
     for(let route in items) {
       let params = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId : items[route].subcontentid, defaultYN : "Y", firstImageYN : "Y", areacodeYN : "Y", catcodeYN : "Y", addrinfoYN : "Y", mapinfoYN : "Y", overviewYN : "Y", serviceKey: API_KEY};
+      let paramsIMG = {MobileOS : "ETC", MobileApp : "TestApp", _type : "json", contentId : items[route].subcontentid, imageYN : "Y", subImageYN : "Y", serviceKey: API_KEY, numOfRows: 6};
       $.ajax({
         url:BASE_URL_COMMON,
         data: params,
@@ -165,7 +166,7 @@ function getRoutesDefaultInfo(items) {
         async: false,
         success: function(response) {
           if(response.response.body.totalCount > 0) {
-            console.log(response);
+            //console.log(response);
             let resData = response.response.body.items.item[0];
             let data = {
               contentid : resData.contentid,
@@ -190,15 +191,8 @@ function getRoutesDefaultInfo(items) {
         error: function(error) {
           console.error(BASE_URL_INFO)
           console.error(error.responseText)
-          xmlDoc = parser.parseFromString(error.responseText, "text/xml");
           
-          if(xmlDoc.getElementsByTagName("returnReasonCode")[0].childNodes[0].nodeValue == '04') {
-            showAndHideSpinner("show");
-            console.log("데이터 로딩중 에러가 발생해 재시도합니다.");
-            setTimeout(() => {
-              getRoutesDefaultInfo();
-            }, 1000);
-          }
+          location.href="./error.html?errorCode=500&errorMessage="+error.responseText;
         },
         beforeSend: function() {
           showAndHideSpinner("show");
@@ -207,6 +201,51 @@ function getRoutesDefaultInfo(items) {
           showAndHideSpinner("hide");
         }
       });
+
+      $.ajax({
+        url:BASE_URL_IMAGE,
+        data: paramsIMG,
+        type: "get",
+        dataType: "json",
+        async: false,
+        success: function(response) {
+          let ar=[];
+          let cid="";
+          //console.log(response);
+          if(response.response.body.totalCount > 0) {
+            let resData = response.response.body.items.item[0]; // 썸네일 이미지
+            let item = response.response.body.items.item;
+            for(let i of item) {
+              ar.push(i.originimgurl);
+              cid=i.contentid;
+            }
+            e[cid] = ar;
+
+            let data = {
+              originimgurl : resData.originimgurl ? resData.originimgurl : noimageURL,
+              smallimageurl : resData.smallimageurl ? resData.originimgurl : noimageURL,
+            }
+            routesImageInfo.push(data);
+          }else {
+            let data = {
+              originimgurl : noimageURL,
+              smallimageurl : noimageURL,
+            }
+            routesImageInfo.push(data);
+          }
+        },
+        error: function(error) {
+          console.error(BASE_URL_IMAGE)
+          console.error(error.responseText)
+          location.href="./error.html?errorCode=500&errorMessage="+error.responseText;
+        },
+        beforeSend: function() {
+          showAndHideSpinner("show");
+        },
+        complete : function() {
+          showAndHideSpinner("hide");
+        }
+      })
     }
     renderKAKAOMap();
     renderDocument();
@@ -230,23 +269,24 @@ function renderDocument() {
     address = address.split(" ");
     $("#title-course-info").html(`${address[0]} ${address[1]}`);
   }
-  $("#course-total").html(`코스 총 거리 : ${introInfo.distance}`);
-  $("#taketime").html(`${introInfo.taketime}`);
+  $("#course-total").html(`코스 총 거리 : ${introInfo.distance==""?"정보없음":introInfo.distance}`);
+  $("#taketime").html(`${introInfo.schedule=="기타" ? introInfo.taketime==""? "정보없음" : introInfo.taketime : introInfo.schedule}`);
   $("#theme").html(`${Object.keys(serviceCodes).includes(defaultInfo.cat3) ? serviceCodes[defaultInfo.cat3] : serviceCodes[defaultInfo.cat1]}`);
 
   let templateRoute_1 = "";
   let templateRoute_2 = "";
   let tags = "";
-  let noimageURL = "./img/heesung/img/no-image.jpg";
   for(let route in routesDefaultInfo) {
+    // 여행 루트별 썸네일사진
     templateRoute_1 += `
     <li class="lists">
-        <a class="list-group-item list-item list-group-item-action ${route==0 ? 'active' : ''}" id="list-item${routesDefaultInfo[route].contentid}-list" data-bs-toggle="list" href="#list-item${routesDefaultInfo[route].contentid}" role="tab" aria-controls="list-item${routesDefaultInfo[route].contentid}" style="width:180px; height: 180px; background: no-repeat url('${routesDefaultInfo[route].firstimage !="" ? routesDefaultInfo[route].firstimage : noimageURL}') 50% 50% / cover;">
+        <a class="list-group-item list-item list-group-item-action ${route==0 ? 'active' : ''}" id="list-item${routesDefaultInfo[route].contentid}-list" data-bs-toggle="list" href="#list-item${routesDefaultInfo[route].contentid}" role="tab" aria-controls="list-item${routesDefaultInfo[route].contentid}" style="width:180px; height: 180px; background: no-repeat url('${routesDefaultInfo[route].firstimage !="" ? routesDefaultInfo[route].firstimage : routesImageInfo[route].originimgurl != "" ? routesImageInfo[route].originimgurl :noimageURL}') 50% 50% / cover;">
             <div>
-                <span class="${routesDefaultInfo[route].firstimage=='' ? 'text-dark' : ''}">${routesDefaultInfo[route].title}</span>
+                <span class="${routesDefaultInfo[route].firstimage=='' && routesImageInfo[route].originimgurl==noimageURL ? 'text-dark' : ''}">${routesDefaultInfo[route].title}</span>
             </div>
         </a>
     </li>`;
+    // 여행루트별 디테일 내용
     templateRoute_2 += `
     <div class="tab-pane fade show ${route==0 ? 'active' : ''}" id="list-item${routesDefaultInfo[route].contentid}" role="tabpanel" aria-labelledby="list-item${routesDefaultInfo[route].contentid}-list">
         <div class="text-center">
@@ -255,8 +295,40 @@ function renderDocument() {
             <p><small>${routesDefaultInfo[route].addr1 ? routesDefaultInfo[route].addr1 : ''}</small></p>
             <span>
               ${routesDefaultInfo[route].overview}
-            </span>
+            </span>`
+      
+    // 캐러셀이미지
+    templateRoute_2 += `
+      <div id="routeCarousel-${route}" class="carousel slide mt-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">`
+        for(let carousel in e[routesDefaultInfo[route].contentid]) {
+          templateRoute_2+= `
+          <button type="button" data-bs-target="#routeCarousel-${route}" style="width:100px" data-bs-slide-to="${carousel}" ${carousel==0? "class='active' aria-current='true'" : ""} area-label="Slide ${carousel}">
+          </button>`
+        }
+        templateRoute_2+=`
+          </div>
+          <div class="carousel-inner">`
+          for(let carousel in e[routesDefaultInfo[route].contentid]) {
+            templateRoute_2+= `
+            <div class="carousel-item ${carousel==0? 'active' : ''}">
+              <img src="${e[routesDefaultInfo[route].contentid][carousel]}" class="d-block w-100" style="height:500px; border-radius:5%;">
+            </div>
+            `
+          }
+          
+    templateRoute_2+=`
+            <button class="carousel-control-prev" type="button" data-bs-target="#routeCarousel-${route}" data-bs-slide="prev">
+              <i class="bi bi-arrow-left-square-fill" style="font-size:28px" aria-hidden="false"></i>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#routeCarousel-${route}" data-bs-slide="next">
+              <i class="bi bi-arrow-right-square-fill" style="font-size:28px" aria-hidden="false"></i>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
     `;
     tags += `
