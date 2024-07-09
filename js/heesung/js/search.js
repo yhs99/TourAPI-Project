@@ -1,5 +1,4 @@
 const API_KEY = "5dx9VltlDcWscOP7NLW0yH/slO2Tl2qnffXGNS1HOhuhhi2KUrHaEzADPUbDY0bUb0zn7FprTTiQHnIRcO1psw==";
-// const API_GOOGLE = "AIzaSyBcZodIxfJdvdPITVANV-mDI5vbAw5hYkE";
 const BASE_URL_AREACODE = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaCode1`;
 const BASE_URL_AREABASED_LIST = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/areaBasedList1`;
 const BASE_URL_KEYWORD = `${location.protocol}//apis.data.go.kr/B551011/${localStorage.getItem("language") == "ko" ? "KorService1" : "EngService1"}/searchKeyword1`;
@@ -10,12 +9,10 @@ const contentTypeId = localStorage.getItem("language") == "ko" ? 25 : 76;
 let parser = new DOMParser();
 let xmlDoc;
 let pageNo = 1;
-let pIndex = 1;
 let isFirst = true;
 let isLoaded = true;
 let isLastPage = false;
 let title = "";
-let pos = "";
 let currentSearch = "getItemListByAreaCode";
 const serviceCode = {
   C01 : "추천코스",
